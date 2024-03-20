@@ -65,7 +65,7 @@ class MYPDF extends TCPDF {
         // Set font
         $this->setFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/ '.$this->getAliasNbPages().' © 2024' .'<a href="www.obajasiadari.com">'.'Obaja Siadari'.'</a>', 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
 
@@ -74,10 +74,10 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->setCreator(PDF_CREATOR);
-$pdf->setAuthor('Nicola Asuni');
-$pdf->setTitle('TCPDF Example 003');
-$pdf->setSubject('TCPDF Tutorial');
-$pdf->setKeywords('TCPDF, PDF, example, test, guide');
+$pdf->setAuthor('Obaja Siadari');
+$pdf->setTitle('Job Completion Report');
+$pdf->setSubject('No Refrence');
+$pdf->setKeywords('PDF, JCR, Report, Laporan');
 
 // set default header data
 $pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -122,23 +122,25 @@ JOB COMPLETION REPORT
 
 
 EOD;
-
-$ceklis = '<table border="1" cellpadding="4" cellspacing="6">
-        <tr>
-            <td></td>
-            <td>Advance</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Final</td>
-        </tr>
-    </table>';
-// print a block of text using Write()
+// Title JCR Write()
 $pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
 
+//Isi
 $pdf->setFont('times', '', 12);
 
+//Advance and Final
+$ceklis = '<table border="1" cellpadding="1" cellspacing="1">
+        <tr>
+            <td width="30"></td>
+            <td align="center">Advance</td>
+        </tr>
+        <tr>
+            <td width="30"></td>
+            <td align="center">Final</td>
+        </tr>
+    </table>';
 
+//refrence and ceklis advance and final
 $html = '<table border = "0">
     <tr>
         <td> Refrence No : </td>
@@ -151,19 +153,58 @@ $html = '<table border = "0">
 
 $pdf->writeHTML($html, true, false, true, false, '');
 
+//Customer Information Section
+$html = '<h1>Customer Information</h1>
+<p>1. Customer Name</p> <br>
+<p></p>     <br>
+            <br>
+<p>2. Customer Adress</p> <br>
+<p> </p>    <br>
+            <br>
+<p>3. Location and Description of Project</p>
+<br><br><br><br>
+<p>4. Item of Works</p>
+<br>
+<p>5. Actual Job Completion Date :</p> <br>';
+
+$pdf->writeHTML($html, true, false, true, false, '');
+
+$signature = '<table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td width="280" align="center"><br><br><br><br><br><u>Teknisi</u></td>
+            <td  align="center"><br><br><br><br><br>IT Head</td>
+            <td  align="center"><br><br><br><br><br>.../.../2024</td>
+        </tr>
+        <tr>
+            <td align="center">PT. 3D TECH Representative(signature)</td>
+            <td  align="center">Title</td>
+            <td  align="center">Date</td>
+        </tr>
+    </table>';
+
+$pdf->writeHTML($signature, true, false, true, false, '');
+
+$signature = '<table border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td width="280" align="center"><br><br><br><br><br>_____________________________</td>
+            <td  align="center"><br><br><br><br><br>___________________</td>
+            <td  align="center"><br><br><br><br><br>___/___/2024</td>
+        </tr>
+        <tr>
+            <td align="center">.......................Representative(signature)</td>
+            <td  align="center">Title</td>
+            <td  align="center">Date</td>
+        </tr>
+    </table>';
+
+$pdf->writeHTML($signature, true, false, true, false, '');
+
+
 $tbl = <<<EOD
 
 
 
 EOD;
-$txt = "Lorem ipsum";
-
-$pdf->MultiCell(55, 5, '[LEFT] '.$txt, 1, 'L', 0, 0, '', '', true);
-$pdf->MultiCell(55, 5, '[RIGHT] '.$txt, 1, 'R', 0, 1, '', '', true);
-$pdf->MultiCell(55, 5, '[CENTER] '.$txt, 1, 'C', 0, 0, '', '', true);
-$pdf->MultiCell(55, 5, '[JUSTIFY] '.$txt, 1, 'J', 0, 2, '' ,'', true);
-$pdf->MultiCell(55, 5, '[DEFAULT] '.$txt, 1, '', 0, 1, '', '', true);
-
 $pdf->writeHTML($tbl, true, false, false, false, '');
 
 // ---------------------------------------------------------
